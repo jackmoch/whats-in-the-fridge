@@ -3,9 +3,12 @@
 const express = require('express')
 const config = require('./knexfile').development
 const knex = require('knex')(config)
+const bodyParser = require('body-parser')
 
 const port = process.env.PORT || 3000
-const app = express() 
+const app = express()
+
+app.use(bodyParser.json())
 
 app.set('port', port)
 
@@ -22,6 +25,14 @@ app.get('/api/allItems', (req, res) => {
 		.select('*')
 		.then((data) => {
 			console.log(data)
+		})
+})
+
+app.post('/api/newUser', (req, res) => {
+	knex('Users')
+		.insert(req.body)
+		.then((data) => {
+			console.log(data);
 		})
 })
 
