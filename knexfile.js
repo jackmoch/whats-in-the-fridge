@@ -6,7 +6,11 @@ module.exports = {
     client: 'sqlite3',
     connection: {
       filename: './fridge.sqlite3'
-    }
+    },
+    // enabling foreign key constraint for SQLite3 - disabled by default
+    pool: {
+      afterCreate: (db, cb) => db.run('PRAGMA foreign_keys = ON', cb)
+    },
   },
 
   staging: {

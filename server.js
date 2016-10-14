@@ -37,6 +37,9 @@ app.post('/api/newUser', (req, res) => {
 })
 
 app.post('/api/newItem', (req, res) => {
+	console.log('INSERT ITEM:', knex('Items')
+		.insert(req.body).toString())
+
 	knex('Items')
 		.insert(req.body)
 		.then((data) => {
