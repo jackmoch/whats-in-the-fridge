@@ -36,6 +36,14 @@ app.post('/api/newUser', (req, res) => {
 		})
 })
 
+app.post('/api/newItem', (req, res) => {
+	knex('Items')
+		.insert(req.body)
+		.then((data) => {
+			console.log(data);
+		})
+})
+
 app.listen(port, () => {
 	console.log(`Listening on port ${port}`)
 })
