@@ -17,7 +17,7 @@ app.get('/api/allUsers', (req, res) => {
 	knex('Users')
 		.select('*')
 		.then((data) => {
-			console.log(data)
+			res.json(data)
 		})
 })
 
@@ -34,13 +34,11 @@ app.post('/api/newUser', (req, res) => {
 		.insert(req.body)
 		.then((data) => {
 			console.log(data);
+			res.json(data)
 		})
 })
 
 app.post('/api/newItem', (req, res) => {
-	console.log('INSERT ITEM:', knex('Items')
-		.insert(req.body).toString())
-
 	knex('Items')
 		.insert(req.body)
 		.then((data) => {
