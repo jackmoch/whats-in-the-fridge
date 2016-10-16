@@ -1,18 +1,18 @@
 'use strict'
 
-app.controller('HomeCtrl', function($scope, $http, UserFactory) {
+app.controller('HomeCtrl', function($scope, $http, UserFactory, ItemFactory) {
 
 	$scope.userArray = []
 	$scope.itemArray = []
 	$scope.currentUser = ''
 
- 	const getAllUsers = () => {
+ 	const getAllUsers = () => 
 		UserFactory.getAllUsers()
 			.then(users => $scope.userArray = users)
- 	}
+ 	
  	getAllUsers()
 
-	const resetNewItemForm = () => {
+	const resetNewItemForm = () => 
 		$scope.newItem = {
 				item_name: '',
 				item_type: '',
@@ -20,24 +20,21 @@ app.controller('HomeCtrl', function($scope, $http, UserFactory) {
 				item_exp_date: '',
 				item_amount: ''
 		 	}
-	}
+	
 	resetNewItemForm()
 
-	$scope.submitUser = (user) => {
+	$scope.submitUser = user => {
 		$scope.userArray.push(user)
 		UserFactory.postNewUser(user)
 	}
 
-	$scope.showUserItems = (user) => {
+	$scope.showUserItems = user => {
 		$scope.currentUser = user
-		$http
-			.get(`/api/getItems/${user.id}`)
-			.then(({data}) => {
-				$scope.itemArray = data
-			})
+		ItemFactory.getItemsByUser(user.id)
+			.then(items => $scope.itemArray = items)
 	}
 
-	$scope.submitNewItem = (newItem) => {
+	$scope.submitNewItem = newItem => {
 		newItem.user_id = $scope.currentUser.id
 		$http
 			.post('/api/newItem', newItem)
