@@ -1,61 +1,43 @@
 'use strict'
 
-app.controller('HomeCtrl', function($scope, $http) {
+app.controller('HomeCtrl', function($scope, $http, UserFactory, ItemFactory) {
 
 	$scope.userArray = []
 	$scope.itemArray = []
 	$scope.currentUser = ''
-	$scope.newItem = {
-		item_name: '',
-		item_type: '',
-		item_add_date: '',
-		item_exp_date: '',
-		item_amount: ''
- 	}
 
-	const getAllUsers = function() {
-		$http
-			.get('/api/allUsers')
-			.then(({data}) => {
-				$scope.userArray = data
-			})
-	}
-	getAllUsers()
+ 	const getAllUsers = () => 
+		UserFactory.getAllUsers()
+			.then(users => $scope.userArray = users)
+ 	
+ 	getAllUsers()
 
-	$scope.submitUser = function(user) {
+	const resetNewItemForm = () => 
+		$scope.newItem = {
+				item_name: '',
+				item_type: '',
+				item_add_date: '',
+				item_exp_date: '',
+				item_amount: ''
+		 	}
+	
+	resetNewItemForm()
+
+	$scope.submitUser = user => {
 		$scope.userArray.push(user)
-		$http
-			.post('/api/newUser', user)
-			.then((data) => {
-				getAllUsers()
-			})
+		UserFactory.postNewUser(user)
 	}
 
-	$scope.showUserItems = function(user) {
+	$scope.showUserItems = user => {
 		$scope.currentUser = user
-		$http
-			.get(`/api/getItems/${user.id}`)
-			.then(({data}) => {
-				$scope.itemArray = data
-			})
+		ItemFactory.getItemsByUser(user.id)
+			.then(items => $scope.itemArray = items)
 	}
 
-	$scope.submitNewItem = function(newItem) {
+	$scope.submitNewItem = newItem => {
 		newItem.user_id = $scope.currentUser.id
-		$http
-			.post('/api/newItem', newItem)
-			.then((data) => {
-				resetNewItemForm()
-				$scope.showUserItems($scope.currentUser)
-			})
+		ItemFactory.postNewItem(newItem)
+			.then(resetNewItemForm())
+			.then($scope.showUserItems($scope.currentUser))
 	}
-
-	const resetNewItemForm = function() {
-		$scope.newItem.item_name = ''
-		$scope.newItem.item_type = ''
-		$scope.newItem.item_add_date = ''
-		$scope.newItem.item_exp_date = ''
-		$scope.newItem.item_amount = ''
-	}
-
 })
