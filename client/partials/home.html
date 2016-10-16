@@ -1,9 +1,12 @@
 <div class="container">
   <div class="row">
+    <h1>Add New User</h1>
+  </div>
+  <div class="row">
     <form class="col s12">
       <div class="row">
         <div class="input-field col s6">
-          <input placeholder="Placeholder" id="first_name" type="text" class="validate" ng-model="user.first_name">
+          <input id="first_name" type="text" class="validate" ng-model="user.first_name">
           <label for="first_name">First Name</label>
         </div>
         <div class="input-field col s6">
@@ -12,24 +15,61 @@
         </div>
       </div>
       <div class="row">
-      	<a class="waves-effect waves-light btn" ng-click="submit(user)">button</a>
-      </div>
-      <div class="row">
-        <div class="col s4 grey center-align user-card" ng-repeat='user in userArray'>
-          <h5><a ng-click="showUserItems(user.id)">{{user.first_name}} {{user.last_name}}</a></h5>
-        </div>
-      </div>
-      <div class="row">
-        <div ng-repeat="item in itemArray">
-          <div class="col s4 center-align">
-            <h5>Name: {{item.item_name}}</h5>
-            <h6>Type: {{item.item_type}}</h6>
-            <h6>Expiration: {{item.item_exp_date}}</h6>
-            <h6>Date Added: {{item.item_add_date}}</h6>
-            <h6>Amount: {{item.item_amount}}</h6>
-          </div>
-        </div>
+      	<a class="waves-effect waves-light btn" ng-click="submitUser(user)">Add User</a>
       </div>
     </form>
+    <div class="row">
+      <h3>Select User</h3>
+    </div>
+    <div class="row">
+      <div class="col s4 grey center-align user-card" ng-repeat='user in userArray'>
+        <h5><a ng-click="showUserItems(user)">{{user.first_name}} {{user.last_name}}</a></h5>
+      </div>
+    </div>
+    <div class="row">
+      <div ng-repeat="item in itemArray">
+        <div class="col s4 center-align">
+          <h5>Name: {{item.item_name}}</h5>
+          <h6>Type: {{item.item_type}}</h6>
+          <h6>Expiration: {{item.item_exp_date}}</h6>
+          <h6>Date Added: {{item.item_add_date}}</h6>
+          <h6>Amount: {{item.item_amount}}</h6>
+        </div>
+      </div>
+    </div>
+    <div ng-if="currentUser">
+      <div class="row">
+        <h5>{{currentUser.first_name}} wants to add a new item</h5>
+      </div>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s2">
+              <input id="item_name" type="text" class="validate" ng-model="newItem.item_name">
+              <label for="item_name">Item Name</label>
+            </div>
+            <div class="input-field col s2">
+              <input id="item_type" type="text" class="validate" ng-model="newItem.item_type">
+              <label for="item_type">Item Type</label>
+            </div>
+            <div class="input-field col s2">
+              <input id="item_add_date" type="text" class="validate" ng-model="newItem.item_add_date">
+              <label for="item_add_date">Item Add Date</label>
+            </div>
+            <div class="input-field col s2">
+              <input id="item_exp_date" type="text" class="validate" ng-model="newItem.item_exp_date">
+              <label for="item_exp_date">Item Exp Date</label>
+            </div>
+            <div class="input-field col s2">
+              <input id="item_amount" type="text" class="validate" ng-model="newItem.item_amount">
+              <label for="item_amount">Item Amount</label>
+            </div>
+          </div>
+          <div class="row">
+            <a class="waves-effect waves-light btn" ng-click="submitNewItem(newItem)">Add Item</a>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
