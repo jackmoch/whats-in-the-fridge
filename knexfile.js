@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './fridge.sqlite3'
+      filename: './db/fridge.sqlite3'
     },
     // enabling foreign key constraint for SQLite3 - disabled by default
     pool: {

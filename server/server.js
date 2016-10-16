@@ -1,13 +1,14 @@
 'use strict'
 
 const express = require('express')
-const config = require('./knexfile').development
+const config = require('../knexfile').development
 const knex = require('knex')(config)
 const bodyParser = require('body-parser')
 
 const port = process.env.PORT || 3000
 const app = express()
 
+app.use(express.static('client'))
 app.use(bodyParser.json())
 
 app.set('port', port)
