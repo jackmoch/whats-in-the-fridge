@@ -5,6 +5,13 @@ app.controller('HomeCtrl', function($scope, $http) {
 	$scope.userArray = []
 	$scope.itemArray = []
 	$scope.currentUser = ''
+	$scope.newItem = {
+		item_name: '',
+		item_type: '',
+		item_add_date: '',
+		item_exp_date: '',
+		item_amount: ''
+ 	}
 
 	const getAllUsers = function() {
 		$http
@@ -34,7 +41,21 @@ app.controller('HomeCtrl', function($scope, $http) {
 	}
 
 	$scope.submitNewItem = function(newItem) {
-		console.log(newItem)
+		newItem.user_id = $scope.currentUser.id
+		$http
+			.post('/api/newItem', newItem)
+			.then((data) => {
+				resetNewItemForm()
+				$scope.showUserItems($scope.currentUser)
+			})
+	}
+
+	const resetNewItemForm = function() {
+		$scope.newItem.item_name = ''
+		$scope.newItem.item_type = ''
+		$scope.newItem.item_add_date = ''
+		$scope.newItem.item_exp_date = ''
+		$scope.newItem.item_amount = ''
 	}
 
 })
