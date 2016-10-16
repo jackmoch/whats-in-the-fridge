@@ -1,6 +1,6 @@
 'use strict'
 
-app.controller('HomeCtrl', function($scope, $http) {
+app.controller('HomeCtrl', function($scope, $http, UserFactory) {
 
 	$scope.userArray = []
 	$scope.itemArray = []
@@ -13,14 +13,12 @@ app.controller('HomeCtrl', function($scope, $http) {
 		item_amount: ''
  	}
 
-	const getAllUsers = function() {
-		$http
-			.get('/api/allUsers')
-			.then(({data}) => {
-				$scope.userArray = data
-			})
-	}
-	getAllUsers()
+ 	const getAllUsers = function() {
+		UserFactory.getAllUsers()
+			.then(users => $scope.userArray = users)
+ 	}
+ 	getAllUsers()
+
 
 	$scope.submitUser = function(user) {
 		$scope.userArray.push(user)
