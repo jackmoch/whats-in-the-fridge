@@ -5,27 +5,30 @@ app.controller('HomeCtrl', function($scope, $http, UserFactory) {
 	$scope.userArray = []
 	$scope.itemArray = []
 	$scope.currentUser = ''
-	$scope.newItem = {
-		item_name: '',
-		item_type: '',
-		item_add_date: '',
-		item_exp_date: '',
-		item_amount: ''
- 	}
 
- 	const getAllUsers = function() {
+ 	const getAllUsers = () => {
 		UserFactory.getAllUsers()
 			.then(users => $scope.userArray = users)
  	}
  	getAllUsers()
 
+	const resetNewItemForm = () => {
+		$scope.newItem = {
+				item_name: '',
+				item_type: '',
+				item_add_date: '',
+				item_exp_date: '',
+				item_amount: ''
+		 	}
+	}
+	resetNewItemForm()
 
-	$scope.submitUser = function(user) {
+	$scope.submitUser = (user) => {
 		$scope.userArray.push(user)
 		UserFactory.postNewUser(user)
 	}
 
-	$scope.showUserItems = function(user) {
+	$scope.showUserItems = (user) => {
 		$scope.currentUser = user
 		$http
 			.get(`/api/getItems/${user.id}`)
@@ -34,7 +37,7 @@ app.controller('HomeCtrl', function($scope, $http, UserFactory) {
 			})
 	}
 
-	$scope.submitNewItem = function(newItem) {
+	$scope.submitNewItem = (newItem) => {
 		newItem.user_id = $scope.currentUser.id
 		$http
 			.post('/api/newItem', newItem)
@@ -43,13 +46,4 @@ app.controller('HomeCtrl', function($scope, $http, UserFactory) {
 				$scope.showUserItems($scope.currentUser)
 			})
 	}
-
-	const resetNewItemForm = function() {
-		$scope.newItem.item_name = ''
-		$scope.newItem.item_type = ''
-		$scope.newItem.item_add_date = ''
-		$scope.newItem.item_exp_date = ''
-		$scope.newItem.item_amount = ''
-	}
-
 })
