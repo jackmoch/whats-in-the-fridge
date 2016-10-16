@@ -7,15 +7,24 @@ app.factory('UserFactory', function($http, $q) {
 			$http
 				.get('/api/allUsers')
 				.then(({data}) => {
-					if (data) {
-						resolve(data)
-					} else {
-						reject(null)
-					}
+					data ? resolve(data) : reject(null)
 				})
 		)
 	}
 
-	return { getAllUsers }
+	const postNewUser = function(newUser) {
+		return $q((resolve, reject) => 
+			$http
+			.post('/api/newUser', newUser)
+			.then((data) => {
+				data ? resolve() : reject() 
+			})
+		)
+	}
+
+	return { 
+		getAllUsers,
+		postNewUser
+	}
 
 })
