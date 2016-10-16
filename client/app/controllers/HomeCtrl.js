@@ -4,6 +4,7 @@ app.controller('HomeCtrl', function($scope, $http) {
 
 	$scope.userArray = []
 	$scope.itemArray = []
+	$scope.currentUser = ''
 
 	const getAllUsers = function() {
 
@@ -29,10 +30,12 @@ app.controller('HomeCtrl', function($scope, $http) {
 
 	}
 
-	$scope.showUserItems = function(id) {
+	$scope.showUserItems = function(user) {
+
+		$scope.currentUser = user
 
 		$http
-			.get(`/api/getItems/${id}`)
+			.get(`/api/getItems/${user.id}`)
 			.then(({data}) => {
 				$scope.itemArray = data
 			})
