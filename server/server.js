@@ -25,7 +25,6 @@ app.get('/api/allItems', (req, res) => {
 	knex('Items')
 		.select('*')
 		.then((data) => {
-			console.log(data)
 		})
 })
 
@@ -33,7 +32,6 @@ app.post('/api/newUser', (req, res) => {
 	knex('Users')
 		.insert(req.body)
 		.then((data) => {
-			console.log(data);
 			res.json(data)
 		})
 })
@@ -42,15 +40,12 @@ app.post('/api/newItem', (req, res) => {
 	knex('Items')
 		.insert(req.body)
 		.then((data) => {
-			console.log(data);
+			res.json(data)
 		})
 })
 
 app.get('/api/getItems/:user_id', (req, res) => {
-	console.log(req.params.user_id)
-
 	let user_id = req.params.user_id
-
 	knex('Items')
 		.select('*')
 		.where('user_id', user_id)
