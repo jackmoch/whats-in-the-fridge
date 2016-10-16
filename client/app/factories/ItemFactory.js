@@ -7,10 +7,17 @@ app.factory('ItemFactory', function($http, $q) {
 			$http
 				.get(`/api/getItems/${userId}`)
 				.then(({data}) => data ? resolve(data) : reject(null)))
+
+	const postNewItem = newItem => 
+		$q((resolve, reject) => 
+			$http
+				.post('/api/newItem', newItem)
+				.then(({data}) => data ? resolve(data) : reject(null)))
 	
 
 	return {
-		getItemsByUser
+		getItemsByUser,
+		postNewItem
 	}
 
 })
