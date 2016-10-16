@@ -22,11 +22,7 @@ app.controller('HomeCtrl', function($scope, $http, UserFactory) {
 
 	$scope.submitUser = function(user) {
 		$scope.userArray.push(user)
-		$http
-			.post('/api/newUser', user)
-			.then((data) => {
-				getAllUsers()
-			})
+		UserFactory.postNewUser(user)
 	}
 
 	$scope.showUserItems = function(user) {
