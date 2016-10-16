@@ -46,6 +46,20 @@ app.post('/api/newItem', (req, res) => {
 		})
 })
 
+app.get('/api/getItems/:user_id', (req, res) => {
+	console.log(req.params.user_id)
+
+	let user_id = req.params.user_id
+
+	knex('Items')
+		.select('*')
+		.where('user_id', user_id)
+		.then((data) => {
+			res.json(data)
+		})
+
+})
+
 app.listen(port, () => {
 	console.log(`Listening on port ${port}`)
 })
