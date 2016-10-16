@@ -36,11 +36,8 @@ app.controller('HomeCtrl', function($scope, $http, UserFactory, ItemFactory) {
 
 	$scope.submitNewItem = newItem => {
 		newItem.user_id = $scope.currentUser.id
-		$http
-			.post('/api/newItem', newItem)
-			.then((data) => {
-				resetNewItemForm()
-				$scope.showUserItems($scope.currentUser)
-			})
+		ItemFactory.postNewItem(newItem)
+			.then(resetNewItemForm())
+			.then($scope.showUserItems($scope.currentUser))
 	}
 })
