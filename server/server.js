@@ -17,7 +17,7 @@ app.get('/api/allUsers', (req, res) => {
 	knex('Users')
 		.select('*')
 		.then((data) => {
-			console.log(data)
+			res.json(data)
 		})
 })
 
@@ -34,18 +34,30 @@ app.post('/api/newUser', (req, res) => {
 		.insert(req.body)
 		.then((data) => {
 			console.log(data);
+			res.json(data)
 		})
 })
 
 app.post('/api/newItem', (req, res) => {
-	console.log('INSERT ITEM:', knex('Items')
-		.insert(req.body).toString())
-
 	knex('Items')
 		.insert(req.body)
 		.then((data) => {
 			console.log(data);
 		})
+})
+
+app.get('/api/getItems/:user_id', (req, res) => {
+	console.log(req.params.user_id)
+
+	let user_id = req.params.user_id
+
+	knex('Items')
+		.select('*')
+		.where('user_id', user_id)
+		.then((data) => {
+			res.json(data)
+		})
+
 })
 
 app.listen(port, () => {
