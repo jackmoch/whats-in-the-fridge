@@ -44,4 +44,4 @@
 
 ### ERD
 ---
-![Whats In The Fridge](img/oweskiDisplay2.jpg?raw=true "OweSki Screencap")
+![Whats In The Fridge](img/WhatsInTheFridge.png)
