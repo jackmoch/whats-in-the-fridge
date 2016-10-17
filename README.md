@@ -36,7 +36,7 @@
 
 ### About
 ---
-- Basic description goes here
+- What's In The Fridge is a full stack application which encorporates an Angular Front End, a Node.js back end, an Express server and a Sqlite3 database. The purpose of this project was to interact with a SQL database via an api server. In this project, our SQL queries were constructed using Knex.
 
 ---
 #
